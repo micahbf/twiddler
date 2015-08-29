@@ -16,7 +16,7 @@ class MIDIDevice
     midi_in = UniMIDI::Input.find_by_name(name)
     midi_out = UniMIDI::Output.find_by_name(name)
 
-    unless midi_in && midi_out
+    unless midi_in
       raise NoMIDIDeviceError, "no device found with name #{name}"
     end
     new(midi_in: midi_in, midi_out: midi_out)
