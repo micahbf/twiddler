@@ -1,12 +1,24 @@
 require 'unimidi'
 
 class MIDIDevice
+  class NoMIDIDeviceError < StandardError; end
+
   attr_reader :midi_in, :midi_out
 
-  def self.select_interactively
+  def self.new_interactively
     midi_in = UniMIDI::Input.gets
     midi_out = UniMIDI::Output.find_by_name(midi_in.name)
     midi_out ||= UniMIDI::Output.gets
+    new(in: midi_in, out: midi_out)
+  end
+
+  def self.new_by_name(name)
+    midi_in = UniMIDI::Input.find_by_name(name)
+    midi_out = UniMIDI::Output.find_by_name(name)
+
+    unless midi_in && midi_out
+      raise NoMIDIDeviceError, "no device found with name #{name}"
+    end
     new(in: midi_in, out: midi_out)
   end
 
