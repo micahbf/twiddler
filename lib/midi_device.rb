@@ -9,7 +9,7 @@ class MIDIDevice
     midi_in = UniMIDI::Input.gets
     midi_out = UniMIDI::Output.find_by_name(midi_in.name)
     midi_out ||= UniMIDI::Output.gets
-    new(in: midi_in, out: midi_out)
+    new(midi_in: midi_in, midi_out: midi_out)
   end
 
   def self.new_by_name(name)
@@ -19,7 +19,7 @@ class MIDIDevice
     unless midi_in && midi_out
       raise NoMIDIDeviceError, "no device found with name #{name}"
     end
-    new(in: midi_in, out: midi_out)
+    new(midi_in: midi_in, midi_out: midi_out)
   end
 
   def initialize(midi_in:, midi_out:)
