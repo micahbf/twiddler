@@ -27,6 +27,16 @@ class MIDIDevice
     @midi_out = midi_out
   end
 
+  def listen
+    raise ArgumentError, "block required" unless block_given?
+    midi_in.open do |input|
+      loop do
+        event_data = input.gets.first
+        yield process_event(event_data)
+      end
+    end
+  end
+
   private
 
   EVENT_NIBBLES = {
