@@ -19,6 +19,7 @@ class MIDIDevice
     unless midi_in
       raise NoMIDIDeviceError, "no device found with name #{name}"
     end
+
     new(midi_in: midi_in, midi_out: midi_out)
   end
 
