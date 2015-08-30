@@ -2,9 +2,7 @@ module Twiddler
   class Operator
     class InvalidOperation < StandardError; end
 
-    def operate(operation, midi_event)
-      value = midi_event[:value]
-
+    def operate(operation, value)
       result = case operation[:op]
       when :raw
         value
