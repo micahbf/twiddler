@@ -42,6 +42,7 @@ module Twiddler
 
     def update_state(param, value)
       state[param[:name]] = {raw: value, value: operator.operate(param, value)}
+      state_changed
     end
 
     def initialize_midi_events
