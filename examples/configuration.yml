@@ -1,0 +1,20 @@
+---
+template: "/foo/bar/baz"
+outfile: "/baz/bar/foo"
+parameters:
+- name: contributor_weight
+  midi_type: control_change
+  channel: 8
+  cc_number: 56
+  function: lin # linear, scales the range from  min to max
+  min: 0.5
+  max: 2.5
+- name: title_phrase_weight
+  midi_type: control_change
+  channel: 8
+  cc_number: 57
+  function: exp # exponential, base ** (coefficient * value) + constant
+  base: 2 # defaults to e
+  coefficient: 3 # defaults to 1
+  constant: 5 # defaults to 0
+  integer: true # round to nearest integer
