@@ -60,7 +60,7 @@ module Twiddler
 
     def state_changed_debounced
       renderer.render(state)
-      exec(config.callback)
+      exec(config.callback) if config.callback
     end
 
     def debounce
