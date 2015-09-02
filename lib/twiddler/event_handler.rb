@@ -4,13 +4,7 @@ module Twiddler
   class EventHandler
     attr_reader :midi_device, :config, :state, :operator, :renderer, :midi_events
 
-    def initialize(midi_device: midi_device,
-                   config: config,
-                   state: state,
-                   operator: operator,
-                   renderer: renderer,
-                   hud: hud)
-
+    def initialize(midi_device:, config:, state: {}, operator:, renderer:, hud:)
       @midi_device = midi_device
       @config = config
       @state = state
@@ -45,14 +39,6 @@ module Twiddler
       state_changed
     end
 
-    def initialize_midi_events
-      @midi_events = {}
-      config.parameters.each do |param|
-        key = [param.midi_type, param.channel, param.number]
-        midi_events[key] = param
-      end
-    end
-
     def state_changed
       hud.update(state)
       debounce
@@ -61,6 +47,14 @@ module Twiddler
     def state_changed_debounced
       renderer.render(state)
       exec(config.callback) if config.callback
+    end
+
+    def initialize_midi_events
+      @midi_events = {}
+      config.parameters.each do |param|
+        key = [param.midi_type, param.channel, param.number]
+        midi_events[key] = param
+      end
     end
 
     def debounce
