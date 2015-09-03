@@ -10,7 +10,7 @@ module Twiddler
         table << [name, data[:raw], data[:value]]
       end
       puts CLEAR
-      table.render(:unicode)
+      puts table.render(:unicode)
     end
   end
 end
