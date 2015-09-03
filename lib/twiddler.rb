@@ -1,13 +1,14 @@
-require 'twiddler/configuration'
-require 'twiddler/event_handler'
-require 'twiddler/hud'
-require 'twiddler/midi_device'
-require 'twiddler/operator'
-require 'twiddler/renderer'
+require_relative 'twiddler/configuration'
+require_relative 'twiddler/event_handler'
+require_relative 'twiddler/hud'
+require_relative 'twiddler/midi_device'
+require_relative 'twiddler/operator'
+require_relative 'twiddler/renderer'
 
 module Twiddler
   def self.run
     config = Configuration.parse_and_load
+
     if config[:midi]
       midi_device = MIDIDevice.new_by_name(config[:midi])
     else
