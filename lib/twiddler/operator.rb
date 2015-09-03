@@ -3,7 +3,7 @@ module Twiddler
     class InvalidOperation < StandardError; end
 
     def operate(operation, value)
-      result = case operation[:op]
+      result = case operation[:function]
       when :raw
         value
       when :lin
@@ -13,7 +13,7 @@ module Twiddler
       when :exp
         exponent(operation, value)
       else
-        raise InvalidOperation, "invalid operation: #{operation[:op]}"
+        raise InvalidOperation, "invalid operation: #{operation[:function]}"
       end
 
       if operation[:integer]
