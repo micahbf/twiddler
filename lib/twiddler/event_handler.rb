@@ -2,7 +2,7 @@ require 'time'
 
 module Twiddler
   class EventHandler
-    attr_reader :midi_device, :config, :state, :operator, :renderer, :midi_events
+    attr_reader :midi_device, :config, :state, :operator, :renderer, :midi_events, :hud
 
     def initialize(midi_device:, config:, state: {}, operator:, renderer:, hud:)
       @midi_device = midi_device
@@ -45,7 +45,7 @@ module Twiddler
     end
 
     def state_changed_debounced
-      renderer.render(state)
+      renderer.render_to_file(state)
       exec(config.callback) if config.callback
     end
 
