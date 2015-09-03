@@ -15,7 +15,7 @@ module Twiddler
       midi_device = MIDIDevice.new_interactively
     end
 
-    renderer = Renderer.new(config.template_path)
+    renderer = Renderer.new(Configuration.template_path, Configuration.outfile_path)
 
     event_handler = EventHandler.new(
       config: config,
