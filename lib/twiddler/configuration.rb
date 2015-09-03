@@ -5,6 +5,8 @@ require 'slop'
 module Twiddler
   class Configuration
     class << self
+      attr_reader :config
+
       def load(opts)
         @config_path = opts.delete(:config)
         yaml_opts = YAML.load_file(@config_path)
@@ -35,12 +37,12 @@ module Twiddler
         load(opts)
       end
 
-      def config
-        @config
-      end
-
       def expand_path(path)
         File.expand_path(path, @config_path)
+      end
+
+      def template_path
+        expand_path(config.template)
       end
     end
   end
