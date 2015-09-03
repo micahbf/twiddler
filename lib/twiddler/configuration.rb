@@ -1,6 +1,7 @@
 require 'yaml'
 require 'hashie'
 require 'slop'
+require 'pathname'
 
 module Twiddler
   class Configuration
@@ -8,7 +9,7 @@ module Twiddler
       attr_reader :config
 
       def load(opts)
-        @config_path = opts.delete(:config)
+        @config_path = File.expand_path(opts.delete(:config), Dir.pwd)
         yaml_opts = YAML.load_file(@config_path)
         @config = Hashie::Mash.new(yaml_opts.merge(opts))
       end
@@ -28,7 +29,7 @@ module Twiddler
             puts o
             exit
           end
-        end.to_hash
+        end.to_hash.reject { |_, v| v.nil? }
       end
 
       def parse_and_load
@@ -38,11 +39,15 @@ module Twiddler
       end
 
       def expand_path(path)
-        File.expand_path(path, @config_path)
+        File.expand_path(path, Pathname.new(@config_path).dirname)
       end
 
       def template_path
         expand_path(config.template)
+      end
+
+      def outfile_path
+        expand_path(config.outfile)
       end
     end
   end
