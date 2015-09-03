@@ -33,7 +33,7 @@ module Twiddler
 
       def parse_and_load
         opts = parse_opts
-        raise "must specify config file" unless options[:config]
+        raise "must specify config file" unless opts[:config]
         load(opts)
       end
 
