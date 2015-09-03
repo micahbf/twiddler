@@ -23,6 +23,10 @@ module Twiddler
       new(midi_in: midi_in, midi_out: midi_out)
     end
 
+    def self.ls
+      UniMIDI::Input.list
+    end
+
     def initialize(midi_in:, midi_out:)
       @midi_in = midi_in
       @midi_out = midi_out
