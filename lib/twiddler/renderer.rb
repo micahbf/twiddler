@@ -9,7 +9,13 @@ module Twiddler
       template = File.read(@template_path)
       template.tap do |rendered|
         locals_hash.each do |key, value|
-          rendered.gsub!(/{{#{key}}}/, value[:value].to_s)
+          string = case value[:value]
+                   when Float
+                     "%.10f" % value[:value]
+                   else
+                     value[:value].to_s
+                   end
+          rendered.gsub!(/{{#{key}}}/, string)
         end
       end
     end
